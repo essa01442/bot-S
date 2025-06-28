@@ -57,14 +57,24 @@ try:
             # Generate AI signals
             signals = predictor.predict_signals(df)
             logger.info(f"Signals at {now}: {signals}")
-            # Execute signals
-            executed = executor.execute_signals(df)
-            # Update risk manager
-            for sym, trade in executed.items():
-                if trade:
-                    price = getattr(trade.orderStatus, 'avgFillPrice', None) or trade.orderStatus.lastFillPrice
-                    risk_manager.record_trade(sym, trade.order.action, price)
-                    logger.info(f"Executed {trade.order.action} {sym} @ {price}")
+
+            # Execute signals with position sizing
+            for sym, signal in signals.items():
+                if signal in ['buy', 'sell']:
+                    # Determine last price for sizing
+                    price = df[sym]['Close'].iloc[-1]
+                    qty = int(cash_per_trade / price)
+                    if qty <= 0:
+                        logger.warning(f"Calculated zero quantity for {sym} at price {price}")
+                        continue
+                    if signal == 'sell':
+                        qty = -qty
+                    trade = executor.place_market_order(sym, qty)
+                    # Record trade and update risk
+                    filled_price = getattr(trade.orderStatus, 'avgFillPrice', None) or trade.orderStatus.lastFillPrice
+                    risk_manager.record_trade(sym, trade.order.action, filled_price)
+                    logger.info(f"Executed {trade.order.action} {sym} qty={abs(qty)} @ {filled_price}")
+
             # Log risk metrics
             metrics = risk_manager.metrics()
             logger.info(f"Drawdown: {metrics['drawdown']:.2%}, Max Drawdown: {metrics['max_drawdown']:.2%}")
