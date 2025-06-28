@@ -1,0 +1,9 @@
+version: '3.8'
+services:
+  bot:
+    build: .
+    volumes:
+      - .:/app
+    command: bash -c "pip install --no-cache-dir -r requirements.txt && scripts/setup_env.sh && streamlit run dashboard/app.py"
+    environment:
+      - PYTHONUNBUFFERED=1
