@@ -1,3 +1,20 @@
+from core.database import Database
+...
+class Executor:
+    def __init__(self, host='127.0.0.1', port=7497, clientId=1):
+        ...
+        # initialize DB
+        self.db = Database()
+...
+    def place_market_order(...):
+        ...
+        self.db.log_trade(trade)
+        return trade
+...
+    def disconnect(self):
+        self.db.close()
+        self.ib.disconnect()
+
 from ib_insync import IB, Stock, MarketOrder, Order
 import logging
 
