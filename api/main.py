@@ -26,3 +26,4 @@ def download_trades():
 @app.get("/health", summary="Health check")
 def health():
     return {"status": "ok"}
+feat: add FastAPI endpoint for CSV download
