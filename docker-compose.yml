@@ -7,3 +7,4 @@ services:
     command: bash -c "pip install --no-cache-dir -r requirements.txt && scripts/setup_env.sh && streamlit run dashboard/app.py"
     environment:
       - PYTHONUNBUFFERED=1
+chore: add docker-compose.yml
