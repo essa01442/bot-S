@@ -11,5 +11,7 @@ torch>=2.0.1       # إذا كنت ستستخدم PyTorch
 fastapi>=0.95.0
 uvicorn[standard]>=0.22.0
 pyyaml>=6.0
+finrl>=0.5.2
+qlib>=0.9.1
 
 chore: add project dependencies
