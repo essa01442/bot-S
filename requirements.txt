@@ -1,0 +1,11 @@
+backtrader>=1.9.74.123
+ib_insync>=0.9.64
+yfinance>=0.2.28
+TA-Lib>=0.4.24
+finrl>=0.5.2       # أو qlib إذا فضلت
+streamlit>=1.25.0  # أو flask إذا تريد واجهة ويب
+pandas>=2.0.1
+numpy>=1.24.2
+scikit-learn>=1.2.2
+torch>=2.0.1       # إذا كنت ستستخدم PyTorch
+chore: add project dependencies
