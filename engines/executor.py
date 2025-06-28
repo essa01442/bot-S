@@ -1,5 +1,12 @@
 from core.database import Database
 ...
+from ai.predictor import AIPredictor
+predictor = AIPredictor(["SNDL","NOK"])
+predictor.train_finrl_agent()
+predictor.train_qlib_strategy()
+signals = predictor.predict_signals(current_data)
+print(signals)
+
 class Executor:
     def __init__(self, host='127.0.0.1', port=7497, clientId=1):
         ...
