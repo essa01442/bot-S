@@ -4,7 +4,8 @@ services:
     build: .
     volumes:
       - .:/app
-    command: bash -c "pip install --no-cache-dir -r requirements.txt && scripts/setup_env.sh && streamlit run dashboard/app.py"
+    ports:
+      - "8000:8000"
+    command: bash -c "pip install --no-cache-dir -r requirements.txt && scripts/setup_env.sh && uvicorn api.main:app --host 0.0.0.0 --port 8000"
     environment:
       - PYTHONUNBUFFERED=1
-chore: add docker-compose.yml
